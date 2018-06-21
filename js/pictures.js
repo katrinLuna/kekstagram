@@ -13,11 +13,11 @@ var initPhotos = function () {
     var newPhotoBuild = {
       url: 'photos/' + (i + 1) + '.jpg',
       likes: getRandomNumber(15, 200),
-      comments: USER_COMMENTS[getRandomNumber(0, USER_COMMENTS.length-1)],
-      description: PHOTO_DESCRIPTION[getRandomNumber(0, PHOTO_DESCRIPTION.length-1)]
+      comments: USER_COMMENTS[getRandomNumber(0, USER_COMMENTS.length - 1)],
+      description: PHOTO_DESCRIPTION[getRandomNumber(0, PHOTO_DESCRIPTION.length - 1)]
     };
     usersPhotos.push(newPhotoBuild);
-  };
+  }
 
   return usersPhotos;
 };
@@ -33,14 +33,15 @@ var createNewPhoto = function (photo) {
   photoElement.querySelector('.picture__stat--comments').textContent = photo.comments;
 
   return photoElement;
-}
+};
 
 var fragment = document.createDocumentFragment();
 
 for (var i = 0; i < usersPhotos.length; i++) {
   fragment.appendChild(createNewPhoto(usersPhotos[i]));
-};
+}
 
 similarListElement.appendChild(fragment);
 
+initPhotos();
 
