@@ -1,5 +1,5 @@
 'use strict';
-var COUNT_ELEMENT = 25;
+var PHOTOS_COUNT = 25;
 var USER_COMMENTS = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 var PHOTO_DESCRIPTIONS = ['Тестим новую камеру!', 'Затусили с друзьями на море', 'Как же круто тут кормят', 'Отдыхаем...', 'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......', 'Вот это тачка!'];
 var usersPhotos = [];
@@ -18,19 +18,19 @@ var hideElement = function (elem) {
 };
 
 var getRandomComments = function () {
-  var commentsGenerate = [];
+  var comments = [];
   var commentCount = getRandomNumber(1, 2);
 
   for (var i = 0; i < commentCount; i++) {
-    commentsGenerate.push(USER_COMMENTS[getRandomNumber(0, USER_COMMENTS.length - 1)]);
+    comments.push(USER_COMMENTS[getRandomNumber(0, USER_COMMENTS.length - 1)]);
   }
 
-  return commentsGenerate;
+  return comments;
 };
 
 
 var initPhotos = function () {
-  for (var i = 0; i < COUNT_ELEMENT; i++) {
+  for (var i = 0; i < PHOTOS_COUNT; i++) {
     var newPhotoBuild = {
       url: 'photos/' + (i + 1) + '.jpg',
       likes: getRandomNumber(15, 200),
@@ -94,14 +94,13 @@ var createBigPhoto = function (photo) {
   return bigPhotoElement;
 };
 
-hideElement(document.querySelector('.social__comment-count'));
-hideElement(document.querySelector('.social__loadmore'));
-
 
 var init = function () {
   usersPhotos = initPhotos();
   renderPhotos(usersPhotos);
   createBigPhoto(usersPhotos[0]);
+  hideElement(document.querySelector('.social__comment-count'));
+  hideElement(document.querySelector('.social__loadmore'));
 };
 
 init();
