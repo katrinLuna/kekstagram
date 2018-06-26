@@ -98,9 +98,28 @@ var createBigPhoto = function (photo) {
 var init = function () {
   usersPhotos = initPhotos();
   renderPhotos(usersPhotos);
-  createBigPhoto(usersPhotos[0]);
   hideElement(document.querySelector('.social__comment-count'));
   hideElement(document.querySelector('.social__loadmore'));
 };
 
 init();
+
+var imageSetupElement = document.querySelector('#upload-file');
+var imageEditElement = document.querySelector('.img-upload__overlay');
+var closeimageEditElement = document.querySelector('#upload-cancel');
+var ESC_KEY = 27;
+
+imageSetupElement.addEventListener('change', function () {
+  imageEditElement.classList.remove('hidden');
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEY) {
+      imageEditElement.classList.add('hidden');
+    }
+  });
+});
+
+closeimageEditElement.addEventListener('click', function () {
+  imageEditElement.classList.add('hidden');
+});
+
