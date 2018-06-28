@@ -104,10 +104,13 @@ var init = function () {
 
 init();
 
+
+var ESC_KEY = 27;
 var imageSetupElement = document.querySelector('#upload-file');
 var imageEditElement = document.querySelector('.img-upload__overlay');
-var closeimageEditElement = document.querySelector('#upload-cancel');
-var ESC_KEY = 27;
+var closeimageEditElement = imageEditElement.querySelector('#upload-cancel');
+var imagePreview = imageEditElement.querySelector('.img-upload__preview');
+var imageEffects = document.querySelector('.img-upload__effects');
 
 imageSetupElement.addEventListener('change', function () {
   imageEditElement.classList.remove('hidden');
@@ -121,5 +124,14 @@ imageSetupElement.addEventListener('change', function () {
 
 closeimageEditElement.addEventListener('click', function () {
   imageEditElement.classList.add('hidden');
+});
+
+imageEffects.addEventListener('click', function (evt) {
+  /*console.log(evt);
+  var checkEffect = imagePreview.classList.contains('effects__preview--');
+  if(checkEffect) {
+    imagePreview.classList.remove('effects__preview--');
+  }*/
+  imagePreview.classList.add('effects__preview--' + evt.target.value);
 });
 
