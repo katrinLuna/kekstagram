@@ -13,7 +13,15 @@ var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+var showElement = function (elem) {
+  elem.classList.remove('hidden');
+};
+
 var hideElement = function (elem) {
+  elem.classList.add('hidden');
+};
+
+var visuallyHideElement = function (elem) {
   elem.classList.add('visually-hidden');
 };
 
@@ -98,8 +106,8 @@ var createBigPhoto = function (photo) {
 var init = function () {
   usersPhotos = initPhotos();
   renderPhotos(usersPhotos);
-  hideElement(document.querySelector('.social__comment-count'));
-  hideElement(document.querySelector('.social__loadmore'));
+  visuallyHideElement(document.querySelector('.social__comment-count'));
+  visuallyHideElement(document.querySelector('.social__loadmore'));
 };
 
 init();
@@ -109,29 +117,24 @@ var ESC_KEY = 27;
 var imageSetupElement = document.querySelector('#upload-file');
 var imageEditElement = document.querySelector('.img-upload__overlay');
 var closeimageEditElement = imageEditElement.querySelector('#upload-cancel');
-var imagePreview = imageEditElement.querySelector('.img-upload__preview');
+var imagePreview = imageEditElement.querySelector('.img-upload__preview img');
 var imageEffects = document.querySelector('.img-upload__effects');
 
 imageSetupElement.addEventListener('change', function () {
-  imageEditElement.classList.remove('hidden');
+  showElement(imageEditElement);
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEY) {
-      imageEditElement.classList.add('hidden');
+      hideElement(imageEditElement);
     }
   });
 });
 
 closeimageEditElement.addEventListener('click', function () {
-  imageEditElement.classList.add('hidden');
+  hideElement(imageEditElement);
 });
 
 imageEffects.addEventListener('click', function (evt) {
-  /*console.log(evt);
-  var checkEffect = imagePreview.classList.contains('effects__preview--');
-  if(checkEffect) {
-    imagePreview.classList.remove('effects__preview--');
-  }*/
-  imagePreview.classList.add('effects__preview--' + evt.target.value);
+  imagePreview.className = 'effects__preview--' + evt.target.value;
 });
 
