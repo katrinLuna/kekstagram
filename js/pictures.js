@@ -112,18 +112,18 @@ var init = function () {
 
 init();
 
-
+// открытие и закрытие редактируемого изображения
 var ESC_KEY = 27;
 var imageSetupElement = document.querySelector('#upload-file');
 var imageEditElement = document.querySelector('.img-upload__overlay');
 var closeimageEditElement = imageEditElement.querySelector('#upload-cancel');
-var imagePreview = imageEditElement.querySelector('.img-upload__preview img');
-var imageEffects = document.querySelector('.img-upload__effects');
-var effectScale = document.querySelector('.img-upload__scale');
-
+var imagePreviewWrapperElement = imageEditElement.querySelector('.img-upload__preview');
+var imagePreviewElement = imageEditElement.querySelector('.img-upload__preview img');
+var sizeValueElement = document.querySelector('.resize__control--value');
 
 imageSetupElement.addEventListener('change', function () {
   showElement(imageEditElement);
+  sizeValueElement.value = 100 + '%';
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEY) {
@@ -136,6 +136,11 @@ closeimageEditElement.addEventListener('click', function () {
   hideElement(imageEditElement);
 });
 
+
+// наложение фильтров на редактируемоге изображение
+var effectScale = document.querySelector('.img-upload__scale');
+var imageEffects = document.querySelector('.img-upload__effects');
+
 imageEffects.addEventListener('click', function (evt) {
   if (evt.target.value === 'none') {
     hideElement(effectScale);
@@ -143,6 +148,40 @@ imageEffects.addEventListener('click', function (evt) {
     showElement(effectScale);
   }
 
-  imagePreview.className = 'effects__preview--' + evt.target.value;
+  imagePreviewElement.className = 'effects__preview--' + evt.target.value;
 });
 
+// масштабирование редактируемого изображения
+var resizeMinusElement = document.querySelector('.resize__control--minus');
+var resizePlusElement = document.querySelector('.resize__control--plus');
+var minResize = 25;
+var maxResize = 100;
+var stepResize = 25;
+
+var getCurentSizeNumber = function () {
+  return Number(sizeValueElement.value.slice(0, -1));
+};
+
+var sizeMinusHandler = function () {
+  var newSizeNumber = getCurentSizeNumber() - stepResize;
+  sizeValueElement.value = newSizeNumber + '%';
+  imagePreviewWrapperElement.style = 'transform: scale(' + (newSizeNumber / 100) + ')';
+};
+
+var sizePlusHandler = function () {
+  var newSizeNumber = getCurentSizeNumber() + stepResize;
+  sizeValueElement.value = newSizeNumber + '%';
+  imagePreviewWrapperElement.style = 'transform: scale(' + (newSizeNumber / 100) + ')';
+};
+
+resizeMinusElement.addEventListener('click', function () {
+  if (getCurentSizeNumber() > minResize) {
+    sizeMinusHandler();
+  }
+});
+
+resizePlusElement.addEventListener('click', function () {
+  if (getCurentSizeNumber() < maxResize) {
+    sizePlusHandler();
+  }
+});
