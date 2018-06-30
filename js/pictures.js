@@ -140,50 +140,50 @@ closeimageEditElement.addEventListener('click', function () {
 
 
 // наложение фильтров на редактируемоге изображение
-var effectScale = document.querySelector('.img-upload__scale');
-var imageEffects = document.querySelector('.img-upload__effects');
+var effectScaleElement = document.querySelector('.img-upload__scale');
+var imageEffectsElement = document.querySelector('.img-upload__effects');
 
-imageEffects.addEventListener('click', function (evt) {
+imageEffectsElement.addEventListener('click', function (evt) {
   if (evt.target.value === 'none') {
-    hideElement(effectScale);
+    hideElement(effectScaleElement);
   } else {
-    showElement(effectScale);
+    showElement(effectScaleElement);
   }
 
   imagePreviewElement.className = 'effects__preview--' + evt.target.value;
 });
 
 // масштабирование редактируемого изображения
+var MIN_RESIZE = 25;
+var MAX_RESIZE = 100;
+var STEP_RESIZE = 25;
 var resizeMinusElement = document.querySelector('.resize__control--minus');
 var resizePlusElement = document.querySelector('.resize__control--plus');
-var minResize = 25;
-var maxResize = 100;
-var stepResize = 25;
 
 var getCurentSizeNumber = function () {
   return Number(sizeValueElement.value.slice(0, -1));
 };
 
 var sizeMinusHandler = function () {
-  var newSizeNumber = getCurentSizeNumber() - stepResize;
+  var newSizeNumber = getCurentSizeNumber() - STEP_RESIZE;
   sizeValueElement.value = newSizeNumber + '%';
   imagePreviewWrapperElement.style = 'transform: scale(' + (newSizeNumber / 100) + ')';
 };
 
 var sizePlusHandler = function () {
-  var newSizeNumber = getCurentSizeNumber() + stepResize;
+  var newSizeNumber = getCurentSizeNumber() + STEP_RESIZE;
   sizeValueElement.value = newSizeNumber + '%';
   imagePreviewWrapperElement.style = 'transform: scale(' + (newSizeNumber / 100) + ')';
 };
 
 resizeMinusElement.addEventListener('click', function () {
-  if (getCurentSizeNumber() > minResize) {
+  if (getCurentSizeNumber() > MIN_RESIZE) {
     sizeMinusHandler();
   }
 });
 
 resizePlusElement.addEventListener('click', function () {
-  if (getCurentSizeNumber() < maxResize) {
+  if (getCurentSizeNumber() < MAX_RESIZE) {
     sizePlusHandler();
   }
 });
