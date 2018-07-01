@@ -195,6 +195,12 @@ var closeBigPhotoElement = document.querySelector('.big-picture__cancel');
 for (var i = 0; i < picturePreviewElement.length; i++) {
   picturePreviewElement[i].addEventListener('click', function (evt) {
     createBigPhoto(usersPhotos[evt.target.dataset.idnum]);
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEY) {
+        hideElement(bigPhotoElement);
+      }
+
+    });
   });
 }
 
