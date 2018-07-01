@@ -76,11 +76,12 @@ var renderPhotos = function (photos) {
   similarListElement.appendChild(fragment);
 };
 
-var createSocialComment = function (photo) {
-  var comment = socialCommentElement.cloneNode(true);
+var createSocialComments = function (photo) {
+  var comment;
   var newComments = [];
 
   for (var i = 0; i < photo.comments.length; i++) {
+    comment = socialCommentElement.cloneNode(true);
     comment.querySelector('.social__picture').src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
     comment.querySelector('.social__text').textContent = photo.comments[i];
 
@@ -97,7 +98,7 @@ var createBigPhoto = function (photo) {
   bigPhotoElement.querySelector('.comments-count').textContent = photo.comments.length;
   bigPhotoElement.querySelector('.social__caption').textContent = photo.description;
 
-  var socialComments = createSocialComment(photo);
+  var socialComments = createSocialComments(photo);
   for (var i = 0; i < socialComments.length; i++) {
     socialCommentListElement.appendChild(socialComments[i]);
   }
@@ -195,11 +196,11 @@ var closeBigPhotoElement = document.querySelector('.big-picture__cancel');
 for (var i = 0; i < picturePreviewElement.length; i++) {
   picturePreviewElement[i].addEventListener('click', function (evt) {
     createBigPhoto(usersPhotos[evt.target.dataset.idnum]);
+
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === ESC_KEY) {
         hideElement(bigPhotoElement);
       }
-
     });
   });
 }
