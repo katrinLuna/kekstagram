@@ -189,7 +189,7 @@ resizePlusElement.addEventListener('click', function () {
   }
 });
 
-// раскрытие большого изображения по клику на превью
+// раскрытие/закрытие большого изображения
 var picturePreviewElement = document.querySelectorAll('.picture__link');
 var closeBigPhotoElement = document.querySelector('.big-picture__cancel');
 
@@ -208,3 +208,8 @@ for (var i = 0; i < picturePreviewElement.length; i++) {
 closeBigPhotoElement.addEventListener('click', function () {
   hideElement(bigPhotoElement);
 });
+
+//валидация хештегов для поля комментариев
+var hashTagsElement = document.querySelector('.text__hashtags');
+var hashTagsArray  = hashTagsElement.value.split(' ');
+
