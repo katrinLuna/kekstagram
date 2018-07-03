@@ -236,9 +236,10 @@ var hashTagsValidation = function () {
       hashtagsInputElement.setCustomValidity('');
     }
 
-    for (var j = 0; j < hashtagsArray.length; j++) {
+    for (var j = i + 1; j < hashtagsArray.length; j++) {
       if (hashtagsArray[j].toLowerCase() === hashtagsArray[i].toLowerCase()) {
-        console.log('упс! один хештег написан дважды, регистр не важен, совпадает хештег номер ' + i + ' и номер' + j);
+        console.log('упс! один хештег написан дважды, регистр не важен, совпадает хештег номер ' + (i + 1) + ' и номер' + (j + 1));
+        hashtagsInputElement.setCustomValidity('упс! один хештег написан дважды, регистр не важен, совпадает хештег номер ' + (i + 1) + ' и номер' + (j + 1));
       }
     }
     // hashtagsInputElement.style = 'border: 2px solid red';
