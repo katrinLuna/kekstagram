@@ -197,8 +197,8 @@ for (var i = 0; i < picturePreviewElement.length; i++) {
   picturePreviewElement[i].addEventListener('click', function (evt) {
     createBigPhoto(usersPhotos[evt.target.dataset.idnum]);
 
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEY) {
+    document.addEventListener('keydown', function (event) {
+      if (event.keyCode === ESC_KEY) {
         hideElement(bigPhotoElement);
       }
     });
@@ -209,7 +209,43 @@ closeBigPhotoElement.addEventListener('click', function () {
   hideElement(bigPhotoElement);
 });
 
-//валидация хештегов для поля комментариев
-var hashTagsElement = document.querySelector('.text__hashtags');
-var hashTagsArray  = hashTagsElement.value.split(' ');
+// валидация хештегов
+var hashtagsInputElement = document.querySelector('.text__hashtags');
 
+var hashTagsValidation = function () {
+  var hashtagsArray = hashtagsInputElement.value.split(' ');
+
+  for (var i = 0; i < hashtagsArray.length; i++ ) {
+      if (hashtagsArray[i] === '#' || hashtagsArray[i].length === 1) {
+        hashtagsInputElement.setCustomValidity('Хеш тег не может состоять из одного символа. ' + (i + 1)  + ' хештег не верен');
+        break;
+      } else if (hashtagsArray.length > 5) {
+        hashtagsInputElement.setCustomValidity('Хештегов может быть максимум 5 штук, думайте короче');
+        break;
+      } else if (hashtagsArray[i].length > 20) {
+        hashtagsInputElement.setCustomValidity('Хештег номер' + (i + 1) + ' очень длинный, думайте короче');
+        break;
+      } else if (hashtagsArray[i].charAt(0) !== '#') {
+        hashtagsInputElement.setCustomValidity('Хештег должен начинаться с решетки. Исправьте хетег номер ' + (i + 1));
+        break;
+      }
+
+      else {
+      hashtagsInputElement.setCustomValidity('');
+    }
+    //hashtagsInputElement.style = 'border: 2px solid red';
+  }
+};
+
+hashtagsInputElement.addEventListener('change', hashTagsValidation)
+
+
+
+
+
+
+
+
+
+// валидация коментариев
+//var userCommentElement = document.querySelector('.text__description');
