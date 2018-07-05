@@ -213,15 +213,16 @@ closeBigPhotoElement.addEventListener('click', function () {
 });
 
 // валидация хештегов
+var MAX_HASHTAGS_COUNT = 5;
 var hashtagsInputElement = document.querySelector('.text__hashtags');
 var formSubmitElement = document.querySelector('.img-upload__submit');
 
 var hashtagsValidationHandler = function () {
-  var hashtagsArray = hashtagsInputElement.value.split(' ');
+  var hashtagsLowercase = hashtagsInputElement.value.toLowerCase();
+  var hashtagsArray = hashtagsLowercase.split(' ');
 
-  if (hashtagsArray.length > 5) {
+  if (hashtagsArray.length > MAX_HASHTAGS_COUNT) {
     hashtagsInputElement.setCustomValidity('Хештегов может быть максимум 5 штук, думайте короче');
-    hashtagsInputElement.style = 'border: 2px solid red';
     return;
   }
 
@@ -240,16 +241,16 @@ var hashtagsValidationHandler = function () {
     }
 
     for (var j = i + 1; j < hashtagsArray.length; j++) {
-      if (hashtagsArray[j].toLowerCase() === hashtagsArray[i].toLowerCase()) {
+      if (hashtagsArray[j] === hashtagsArray[i]) {
         hashtagsInputElement.setCustomValidity('упс! один хештег написан дважды, регистр не важен, совпадает хештег номер ' + (i + 1) + ' и номер' + (j + 1));
         return;
       }
     }
   }
-
 };
 
 hashtagsInputElement.addEventListener('blur', hashtagsValidationHandler);
+
 formSubmitElement.addEventListener('click', function () {
   if (!hashtagsInputElement.validity.valid) {
     hashtagsInputElement.style = 'border: 2px solid red';
