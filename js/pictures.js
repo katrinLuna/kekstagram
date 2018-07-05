@@ -76,11 +76,12 @@ var renderPhotos = function (photos) {
   similarListElement.appendChild(fragment);
 };
 
-var createSocialComment = function (photo) {
-  var comment = socialCommentElement.cloneNode(true);
+var createSocialComments = function (photo) {
+  var comment;
   var newComments = [];
 
   for (var i = 0; i < photo.comments.length; i++) {
+    comment = socialCommentElement.cloneNode(true);
     comment.querySelector('.social__picture').src = 'img/avatar-' + getRandomNumber(1, 6) + '.svg';
     comment.querySelector('.social__text').textContent = photo.comments[i];
 
@@ -97,7 +98,7 @@ var createBigPhoto = function (photo) {
   bigPhotoElement.querySelector('.comments-count').textContent = photo.comments.length;
   bigPhotoElement.querySelector('.social__caption').textContent = photo.description;
 
-  var socialComments = createSocialComment(photo);
+  var socialComments = createSocialComments(photo);
   for (var i = 0; i < socialComments.length; i++) {
     socialCommentListElement.appendChild(socialComments[i]);
   }
@@ -128,7 +129,7 @@ imageSetupElement.addEventListener('change', function () {
   sizeValueElement.value = 100 + '%';
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEY) {
+    if (evt.keyCode === ESC_KEY && evt.target.className !== 'text__hashtags' && evt.target.className !== 'text__description') {
       hideElement(imageEditElement);
     }
   });
@@ -188,16 +189,70 @@ resizePlusElement.addEventListener('click', function () {
   }
 });
 
-// раскрытие большого изображения по клику на превью
+// раскрытие/закрытие большого изображения
 var picturePreviewElement = document.querySelectorAll('.picture__link');
 var closeBigPhotoElement = document.querySelector('.big-picture__cancel');
 
-for (var i = 0; i < picturePreviewElement.length; i++) {
-  picturePreviewElement[i].addEventListener('click', function (evt) {
-    createBigPhoto(usersPhotos[evt.target.dataset.idnum]);
-  });
-}
+var makePicPreviewClicable = function () {
+  for (var i = 0; i < picturePreviewElement.length; i++) {
+    picturePreviewElement[i].addEventListener('click', function (evt) {
+      createBigPhoto(usersPhotos[evt.target.dataset.idnum]);
 
+      document.addEventListener('keydown', function (event) {
+        if (event.keyCode === ESC_KEY) {
+          hideElement(bigPhotoElement);
+        }
+      });
+    });
+  }
+};
+
+makePicPreviewClicable();
 closeBigPhotoElement.addEventListener('click', function () {
   hideElement(bigPhotoElement);
+});
+
+// валидация хештегов
+var MAX_HASHTAGS_COUNT = 5;
+var hashtagsInputElement = document.querySelector('.text__hashtags');
+var formSubmitElement = document.querySelector('.img-upload__submit');
+
+var hashtagsValidationHandler = function () {
+  var hashtagsLowercase = hashtagsInputElement.value.toLowerCase();
+  var hashtagsArray = hashtagsLowercase.split(' ');
+
+  if (hashtagsArray.length > MAX_HASHTAGS_COUNT) {
+    hashtagsInputElement.setCustomValidity('Хештегов может быть максимум 5 штук, думайте короче');
+    return;
+  }
+
+  for (var i = 0; i < hashtagsArray.length; i++) {
+    if (hashtagsArray[i] === '#' || hashtagsArray[i].length === 1) {
+      hashtagsInputElement.setCustomValidity('Хеш тег не может состоять из одного символа. ' + (i + 1) + ' хештег не верен');
+      break;
+    } else if (hashtagsArray[i].length > 20) {
+      hashtagsInputElement.setCustomValidity('Хештег номер' + (i + 1) + ' очень длинный, думайте короче');
+      break;
+    } else if (hashtagsArray[i].charAt(0) !== '#') {
+      hashtagsInputElement.setCustomValidity('Хештег должен начинаться с решетки. Исправьте хештег номер ' + (i + 1));
+      break;
+    } else {
+      hashtagsInputElement.setCustomValidity('');
+    }
+
+    for (var j = i + 1; j < hashtagsArray.length; j++) {
+      if (hashtagsArray[j] === hashtagsArray[i]) {
+        hashtagsInputElement.setCustomValidity('упс! один хештег написан дважды, регистр не важен, совпадает хештег номер ' + (i + 1) + ' и номер' + (j + 1));
+        return;
+      }
+    }
+  }
+};
+
+hashtagsInputElement.addEventListener('blur', hashtagsValidationHandler);
+
+formSubmitElement.addEventListener('click', function () {
+  if (!hashtagsInputElement.validity.valid) {
+    hashtagsInputElement.style = 'border: 2px solid red';
+  }
 });
