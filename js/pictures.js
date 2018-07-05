@@ -129,7 +129,7 @@ imageSetupElement.addEventListener('change', function () {
   sizeValueElement.value = 100 + '%';
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEY) {
+    if (evt.keyCode === ESC_KEY && evt.target.className !== 'text__hashtags' && evt.target.className !== 'text__description') {
       hideElement(imageEditElement);
     }
   });
@@ -193,44 +193,47 @@ resizePlusElement.addEventListener('click', function () {
 var picturePreviewElement = document.querySelectorAll('.picture__link');
 var closeBigPhotoElement = document.querySelector('.big-picture__cancel');
 
-for (var i = 0; i < picturePreviewElement.length; i++) {
-  picturePreviewElement[i].addEventListener('click', function (evt) {
-    createBigPhoto(usersPhotos[evt.target.dataset.idnum]);
+var makePicPreviewClicable = function () {
+  for (var i = 0; i < picturePreviewElement.length; i++) {
+    picturePreviewElement[i].addEventListener('click', function (evt) {
+      createBigPhoto(usersPhotos[evt.target.dataset.idnum]);
 
-    document.addEventListener('keydown', function (event) {
-      if (event.keyCode === ESC_KEY) {
-        hideElement(bigPhotoElement);
-      }
+      document.addEventListener('keydown', function (event) {
+        if (event.keyCode === ESC_KEY) {
+          hideElement(bigPhotoElement);
+        }
+      });
     });
-  });
-}
+  }
+};
 
+makePicPreviewClicable();
 closeBigPhotoElement.addEventListener('click', function () {
   hideElement(bigPhotoElement);
 });
 
-// валидация коментариев
-// var userCommentElement = document.querySelector('.text__description');
-
-
 // валидация хештегов
 var hashtagsInputElement = document.querySelector('.text__hashtags');
+var formSubmitElement = document.querySelector('.img-upload__submit');
 
-var hashTagsValidation = function () {
+var hashtagsValidationHandler = function () {
   var hashtagsArray = hashtagsInputElement.value.split(' ');
+
+  if (hashtagsArray.length > 5) {
+    hashtagsInputElement.setCustomValidity('Хештегов может быть максимум 5 штук, думайте короче');
+    hashtagsInputElement.style = 'border: 2px solid red';
+    return;
+  }
 
   for (var i = 0; i < hashtagsArray.length; i++) {
     if (hashtagsArray[i] === '#' || hashtagsArray[i].length === 1) {
       hashtagsInputElement.setCustomValidity('Хеш тег не может состоять из одного символа. ' + (i + 1) + ' хештег не верен');
       break;
-    } else if (hashtagsArray.length > 5) {
-      hashtagsInputElement.setCustomValidity('Хештегов может быть максимум 5 штук, думайте короче');
-      break;
     } else if (hashtagsArray[i].length > 20) {
       hashtagsInputElement.setCustomValidity('Хештег номер' + (i + 1) + ' очень длинный, думайте короче');
       break;
     } else if (hashtagsArray[i].charAt(0) !== '#') {
-      hashtagsInputElement.setCustomValidity('Хештег должен начинаться с решетки. Исправьте хетег номер ' + (i + 1));
+      hashtagsInputElement.setCustomValidity('Хештег должен начинаться с решетки. Исправьте хештег номер ' + (i + 1));
       break;
     } else {
       hashtagsInputElement.setCustomValidity('');
@@ -238,13 +241,17 @@ var hashTagsValidation = function () {
 
     for (var j = i + 1; j < hashtagsArray.length; j++) {
       if (hashtagsArray[j].toLowerCase() === hashtagsArray[i].toLowerCase()) {
-        console.log('упс! один хештег написан дважды, регистр не важен, совпадает хештег номер ' + (i + 1) + ' и номер' + (j + 1));
         hashtagsInputElement.setCustomValidity('упс! один хештег написан дважды, регистр не важен, совпадает хештег номер ' + (i + 1) + ' и номер' + (j + 1));
+        return;
       }
     }
-    // hashtagsInputElement.style = 'border: 2px solid red';
   }
+
 };
 
-hashtagsInputElement.addEventListener('change', hashTagsValidation);
-
+hashtagsInputElement.addEventListener('blur', hashtagsValidationHandler);
+formSubmitElement.addEventListener('click', function () {
+  if (!hashtagsInputElement.validity.valid) {
+    hashtagsInputElement.style = 'border: 2px solid red';
+  }
+});
