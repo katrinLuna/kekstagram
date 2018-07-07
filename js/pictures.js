@@ -139,15 +139,48 @@ closeimageEditElement.addEventListener('click', function () {
   hideElement(imageEditElement);
 });
 
-
-// степень наложение эфекта на изображение и драгндроп управление ползунком
+// наложение фильтров на редактируемоге изображение
 var SCALE_WIDTH = 453;
+var imageEffectsElement = document.querySelector('.img-upload__effects');
 var effectScaleElement = document.querySelector('.img-upload__scale');
 var effectScalePinElement = effectScaleElement.querySelector('.scale__pin');
 var effectScaleValueElement = effectScaleElement.querySelector('.scale__value');
 var effectScaleLevelElement = effectScaleElement.querySelector('.scale__level');
-var imageEffectsElement = document.querySelector('.img-upload__effects');
 
+var resetEffectScale = function () {
+  imagePreviewElement.className = '';
+  imagePreviewElement.style = '';
+  effectScalePinElement.style.left = SCALE_WIDTH + 'px';
+  effectScaleLevelElement.style.width = SCALE_WIDTH + 'px';
+};
+
+imageEffectsElement.addEventListener('click', function (evt) {
+  if (evt.target.value === 'none') {
+    hideElement(effectScaleElement);
+  } else {
+    showElement(effectScaleElement);
+  }
+
+  resetEffectScale();
+  imagePreviewElement.className = 'effects__preview--' + evt.target.value;
+});
+
+// определение глубины накладываемого фильтра
+var scaleProportion = {};
+var getEffectScaleProportion = function (input) {
+  scaleProportion = {
+    'effects__preview--chrome': 'grayscale(' + ((input.value * 100) / (SCALE_WIDTH * 100)).toFixed(2) + ')',
+    'effects__preview--sepia': 'sepia(' + ((input.value * 100) / (SCALE_WIDTH * 100)).toFixed(2) + ')'
+  };
+  return scaleProportion;
+};
+
+var applyFilterDepth = function () {
+  getEffectScaleProportion(effectScaleValueElement);
+  imagePreviewElement.style = 'filter:' + scaleProportion[imagePreviewElement.className];
+};
+
+// степень наложение эфекта на изображение и драгндроп управление ползунком
 var effectScaleDownHandler = function (evt) {
   evt.preventDefault();
   var startCordsX = evt.clientX;
@@ -163,7 +196,8 @@ var effectScaleDownHandler = function (evt) {
     }
     effectScalePinElement.style.left = newPinPosition + 'px';
     effectScaleLevelElement.style.width = newPinPosition + 'px';
-    effectScaleValueElement.value = newPinPosition - (effectScalePinElement.offsetWidth / 2);
+    effectScaleValueElement.value = newPinPosition;
+    applyFilterDepth();
   };
 
   var effectScaleMouseUpHandler = function (upEvt) {
@@ -178,16 +212,6 @@ var effectScaleDownHandler = function (evt) {
 
 effectScalePinElement.addEventListener('mousedown', effectScaleDownHandler);
 
-// наложение фильтров на редактируемоге изображение
-imageEffectsElement.addEventListener('click', function (evt) {
-  if (evt.target.value === 'none') {
-    hideElement(effectScaleElement);
-  } else {
-    showElement(effectScaleElement);
-  }
-
-  imagePreviewElement.className = 'effects__preview--' + evt.target.value;
-});
 
 // масштабирование редактируемого изображения
 var MIN_RESIZE = 25;
