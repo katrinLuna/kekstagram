@@ -140,10 +140,44 @@ closeimageEditElement.addEventListener('click', function () {
 });
 
 
-// наложение фильтров на редактируемоге изображение
+// степень наложение эфекта на изображение и драгндроп управление ползунком
+var SCALE_WIDTH = 453;
 var effectScaleElement = document.querySelector('.img-upload__scale');
+var effectScalePinElement = effectScaleElement.querySelector('.scale__pin');
+var effectScaleValueElement = effectScaleElement.querySelector('.scale__value');
+var effectScaleLevelElement = effectScaleElement.querySelector('.scale__level');
 var imageEffectsElement = document.querySelector('.img-upload__effects');
 
+effectScalePinElement.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  var startCordsX = evt.clientX;
+
+  var effectScaleMouseMoveHandler = function (moveEvt) {
+    moveEvt.preventDefault();
+    var shiftX = startCordsX - moveEvt.clientX;
+    startCordsX = moveEvt.clientX;
+    var newPinPosition = (effectScalePinElement.offsetLeft - shiftX);
+
+    if (newPinPosition < 0 || newPinPosition > SCALE_WIDTH) {
+      return;
+    }
+    effectScalePinElement.style.left = newPinPosition + 'px';
+    effectScaleLevelElement.style.width = newPinPosition + 'px';
+    effectScaleValueElement.value = newPinPosition - (effectScalePinElement.offsetWidth / 2);
+  };
+
+  var effectScaleMouseUpHandler = function (upEvt) {
+    upEvt.preventDefault();
+    document.removeEventListener('mousemove', effectScaleMouseMoveHandler);
+    document.removeEventListener('mouseup', effectScaleMouseUpHandler);
+  };
+
+  document.addEventListener('mousemove', effectScaleMouseMoveHandler);
+  document.addEventListener('mouseup', effectScaleMouseUpHandler);
+});
+
+
+// наложение фильтров на редактируемоге изображение
 imageEffectsElement.addEventListener('click', function (evt) {
   if (evt.target.value === 'none') {
     hideElement(effectScaleElement);
