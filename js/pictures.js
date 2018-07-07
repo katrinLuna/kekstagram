@@ -127,6 +127,7 @@ var sizeValueElement = document.querySelector('.resize__control--value');
 imageSetupElement.addEventListener('change', function () {
   showElement(imageEditElement);
   sizeValueElement.value = 100 + '%';
+  resetEffectScale();
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ESC_KEY && evt.target.className !== 'text__hashtags' && evt.target.className !== 'text__description') {
@@ -166,11 +167,17 @@ imageEffectsElement.addEventListener('click', function (evt) {
 });
 
 // определение глубины накладываемого фильтра
+var MAX_PHOBOS_FILTER = 3;
+var MAX_HEAT_FILTER = 3;
+
 var scaleProportion = {};
 var getEffectScaleProportion = function (input) {
   scaleProportion = {
     'effects__preview--chrome': 'grayscale(' + ((input.value * 100) / (SCALE_WIDTH * 100)).toFixed(2) + ')',
-    'effects__preview--sepia': 'sepia(' + ((input.value * 100) / (SCALE_WIDTH * 100)).toFixed(2) + ')'
+    'effects__preview--sepia': 'sepia(' + ((input.value * 100) / (SCALE_WIDTH * 100)).toFixed(2) + ')',
+    'effects__preview--marvin': 'invert(' + ((input.value * 100) / SCALE_WIDTH).toFixed(2) + '%)',
+    'effects__preview--phobos': 'blur(' + Math.round((input.value * MAX_PHOBOS_FILTER) / SCALE_WIDTH) + 'px)',
+    'effects__preview--heat': 'brightness(' + (((input.value * (MAX_HEAT_FILTER - 1)) / SCALE_WIDTH) + 1) + ')'
   };
   return scaleProportion;
 };
