@@ -148,7 +148,7 @@ var effectScaleValueElement = effectScaleElement.querySelector('.scale__value');
 var effectScaleLevelElement = effectScaleElement.querySelector('.scale__level');
 var imageEffectsElement = document.querySelector('.img-upload__effects');
 
-effectScalePinElement.addEventListener('mousedown', function (evt) {
+var effectScaleDownHandler = function (evt) {
   evt.preventDefault();
   var startCordsX = evt.clientX;
 
@@ -174,8 +174,9 @@ effectScalePinElement.addEventListener('mousedown', function (evt) {
 
   document.addEventListener('mousemove', effectScaleMouseMoveHandler);
   document.addEventListener('mouseup', effectScaleMouseUpHandler);
-});
+};
 
+effectScalePinElement.addEventListener('mousedown', effectScaleDownHandler);
 
 // наложение фильтров на редактируемоге изображение
 imageEffectsElement.addEventListener('click', function (evt) {
