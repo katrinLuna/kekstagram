@@ -16,6 +16,7 @@
     getRandomNumber: function (min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
-    ESC_KEY: 27
+    ESC_KEY: 27,
+    imageSetupElement: document.querySelector('#upload-file')
   };
 })();
