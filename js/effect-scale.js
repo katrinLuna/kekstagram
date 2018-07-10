@@ -50,7 +50,7 @@
     imagePreviewElement.style = 'filter:' + scaleProportion[imagePreviewElement.className];
   };
 
-  var effectScaleDownHandler = function (evt) {
+  var effectScaleMouseDownHandler = function (evt) {
     evt.preventDefault();
     var startCordsX = evt.clientX;
 
@@ -79,5 +79,5 @@
     document.addEventListener('mouseup', effectScaleMouseUpHandler);
   };
 
-  effectScalePinElement.addEventListener('mousedown', effectScaleDownHandler);
+  effectScalePinElement.addEventListener('mousedown', effectScaleMouseDownHandler);
 })();
