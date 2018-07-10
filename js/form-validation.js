@@ -39,9 +39,31 @@
 
   hashtagsInputElement.addEventListener('blur', hashtagsValidationHandler);
 
+  var imageUploadFormElement = document.querySelector('.img-upload__form');
+
   formSubmitElement.addEventListener('click', function () {
+    evt.preventDefault();
     if (!hashtagsInputElement.validity.valid) {
       hashtagsInputElement.style = 'border: 2px solid red';
+    } else {
+    window.backend.upload(new FormData(imageUploadFormElement), successHandler, serverUploadError);
     }
   });
+
+  var successHandler = function () {
+    window.utils.addHidden(window.utils.imageSetupElement);
+    //window.uploadPicture.value = '';
+  };
+
+  var serverUploadError = function (errorMessage) {
+    var errorMessageTemplateElement = document.querySelector('#picture').content.querySelector('.img-upload__message--error');
+    var uploadErrorElement = errorMessageTemplateElement.cloneNode(true);
+    document.body.appendChild(uploadErrorElement);
+    window.utils.showElement(uploadErrorElement);
+    var hideErrorMessage = function () {
+      window.utils.hideElement(uploadErrorElement);
+    }
+    setTimeout(hideErrorMessage, 5000);
+  }
+
 })();

@@ -67,6 +67,19 @@
 
   init();
 
+  // общение с бэкендом через callback
+  var onSuccess = function (data) {
+    console.log(data);
+  };
+
+  var serverDownloadError = function (errorMessage) {
+    console.log(errorMessage); // заменить на кастомный вывод ошибки и перенести в utils тут вызвать через него
+  };
+
+  window.backend.download(onSuccess, serverDownloadError); // только это должно быть вызвано и обработано до функции генерации превьюшек чтобы было из чего их делать собственно
+
+  // общение с бэкендом
+
   window.gallery = {
     usersPhotosAll: usersPhotos
   };

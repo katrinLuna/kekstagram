@@ -1,32 +1,53 @@
 'use strict';
 
-(function (){
+(function () {
   var DOWNLOAD_URL = 'https://js.dump.academy/kekstagram/data';
+  var UPLOAD_URL = 'https://js.dump.academy/kekstagr';
   var SERVER_ANSWER_OK = 200;
 
-  /*только это выносится в файл в котором будет использоваться результат работы функции
-  и будет вызываться вот так window.backend.download(onSuccess);
-
-  var onSuccess = function (data) {//поэтому без window объявляем
-    console.log(data);
-  }*/
-
   window.backend = {
-    download: function (onLoad) {
-      var xhr = new XMLHttpRequest;
+    download: function (onLoad, onError) {
+      var xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
-      xhr.open('GET', DOWNLOAD_URL);
 
       xhr.addEventListener('load', function () {
         if (xhr.status === SERVER_ANSWER_OK) {
           onLoad(xhr.response);
         } else {
-          console.log('error взаимодействия с сервером');
+          onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
         }
-      })
+      });
 
+      xhr.addEventListener('error', function () {
+        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      });
+
+      xhr.addEventListener('timeout', function () {
+        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      });
+
+      xhr.timeout = 5000;
+
+      xhr.open('GET', DOWNLOAD_URL);
       xhr.send();
+    },
+    upload: function (data, onLoad, onError) {
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
+
+      xhr.addEventListener('load', function () {
+        if (xhr.status === SERVER_ANSWER_OK) {
+          onLoad(xhr.response);
+          console.log(xhr);
+        } else {
+          onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        }
+      });
+
+      xhr.open('POST', UPLOAD_URL);
+      xhr.send(data);
+
     }
-  }
+  };
 
 })();
