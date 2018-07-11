@@ -45,7 +45,6 @@
 
       xhr.open('POST', UPLOAD_URL);
       xhr.send(data);
-
     }
   };
 

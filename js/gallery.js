@@ -73,7 +73,7 @@
   };
 
   var serverDownloadError = function (errorMessage) {
-    console.log(errorMessage); // заменить на кастомный вывод ошибки и перенести в utils тут вызвать через него
+    window.utils.errorHandler(errorMessage);
   };
 
   window.backend.download(onSuccess, serverDownloadError); // только это должно быть вызвано и обработано до функции генерации превьюшек чтобы было из чего их делать собственно
