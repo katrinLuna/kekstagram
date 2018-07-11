@@ -49,25 +49,26 @@
     return bigPhotoElement;
   };
 
-
   window.bigPhoto = {
     makePicPreviewClicable: function (previewPic) {
       for (var i = 0; i < previewPic.length; i++) {
         previewPic[i].addEventListener('click', function (evt) {
           createBigPhoto(window.gallery.usersPhotosAll[evt.target.dataset.idnum]);
-          console.log(evt.target.dataset.idnum);
+          document.body.classList.add('modal-open');
 
-          /*document.addEventListener('keydown', function (event) {
+          document.addEventListener('keydown', function (event) {
             if (event.keyCode === window.utils.ESC_KEY) {
+              document.body.classList.remove('modal-open');
               window.utils.hideElement(bigPhotoElement);
             }
-          });*/
+          });
         });
       }
     }
   };
 
   closeBigPhotoElement.addEventListener('click', function () {
+    document.body.classList.remove('modal-open');
     window.utils.hideElement(bigPhotoElement);
   });
 })();

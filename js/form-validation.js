@@ -41,12 +41,11 @@
 
   hashtagsInputElement.addEventListener('blur', hashtagsValidationHandler);
 
-
   formSubmitElement.addEventListener('click', function (evt) {
-    evt.preventDefault();
     if (!hashtagsInputElement.validity.valid) {
       hashtagsInputElement.style = 'border: 2px solid red';
     } else {
+      evt.preventDefault();
       window.backend.upload(new FormData(imageUploadFormElement), successHandler, serverUploadError);
     }
   });
