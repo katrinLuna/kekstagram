@@ -56,14 +56,14 @@
     window.effectScale.resetEffectScale();
     hashtagsInputElement.value = '';
     commentInputElement.value = '';
-  }
+  };
 
   var successHandler = function () {
     window.utils.hideElement(window.utils.imageEditElement);
     resetFormInfo();
   };
 
-  var serverUploadError = function (errorMessage) {
+  var serverUploadError = function () {
     window.utils.hideElement(window.utils.imageEditElement);
     resetFormInfo();
     var errorMessageTemplateElement = document.querySelector('#picture').content.querySelector('.img-upload__message--error');
@@ -74,6 +74,6 @@
     uploadErrorElement.addEventListener('click', function () {
       window.utils.hideElement(uploadErrorElement);
     });
-  }
+  };
 
 })();
