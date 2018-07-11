@@ -2,7 +2,7 @@
 
 (function () {
   var DOWNLOAD_URL = 'https://js.dump.academy/kekstagram/data';
-  var UPLOAD_URL = 'https://js.dump.academy/kekstagr';
+  var UPLOAD_URL = 'https://js.dump.academy/kekstagram';
   var SERVER_ANSWER_OK = 200;
 
   window.backend = {
@@ -38,7 +38,6 @@
       xhr.addEventListener('load', function () {
         if (xhr.status === SERVER_ANSWER_OK) {
           onLoad(xhr.response);
-          console.log(xhr);
         } else {
           onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
         }

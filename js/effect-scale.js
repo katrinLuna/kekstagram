@@ -80,4 +80,8 @@
   };
 
   effectScalePinElement.addEventListener('mousedown', effectScaleMouseDownHandler);
+
+  window.effectScale = {
+    resetEffectScale: resetEffectScale
+  };
 })();

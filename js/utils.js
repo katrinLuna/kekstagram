@@ -17,6 +17,7 @@
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
     ESC_KEY: 27,
-    imageSetupElement: document.querySelector('#upload-file')
+    imageSetupElement: document.querySelector('#upload-file'),
+    imageEditElement: document.querySelector('.img-upload__overlay')
   };
 })();
