@@ -11,6 +11,8 @@
     renderPhotos(usersPhotos);
     window.utils.visuallyHideElement(document.querySelector('.social__comment-count'));
     window.utils.visuallyHideElement(document.querySelector('.social__loadmore'));
+    var picturePreviewElement = document.querySelectorAll('.picture__link');
+    window.bigPhoto.makePicPreviewClicable(picturePreviewElement);
     window.gallery = {
       usersPhotosAll: usersPhotos
     };
@@ -22,17 +24,6 @@
 
   window.backend.download(serverDownloadSuccess, serverDownloadError);
 
-  /* var getRandomComments = function () {
-    var comments = [];
-    var commentCount = window.utils.getRandomNumber(1, 2);
-
-    for (var i = 0; i < commentCount; i++) {
-      comments.push(USER_COMMENTS[window.utils.getRandomNumber(0, USER_COMMENTS.length - 1)]);
-    }
-
-    return comments;
-  }; */
-
   var renderPhotos = function (photos) {
     var fragment = document.createDocumentFragment();
 
@@ -41,7 +32,7 @@
 
       photoElement.querySelector('.picture__stat--likes').textContent = photos[i].likes;
       photoElement.querySelector('.picture__img').src = photos[i].url;
-      photoElement.querySelector('.picture__img').dataset.idnum = i + 1;
+      photoElement.querySelector('.picture__img').dataset.idnum = i;
       photoElement.querySelector('.picture__stat--comments').textContent = photos[i].comments.length;
 
       fragment.appendChild(photoElement);
