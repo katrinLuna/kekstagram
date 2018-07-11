@@ -2,7 +2,7 @@
 
 (function () {
   var DOWNLOAD_URL = 'https://js.dump.academy/kekstagram/data';
-  var UPLOAD_URL = 'https://js.dump.academy/kekstagram';
+  var UPLOAD_URL = 'https://js.dump.academy/kekstagram123';
   var SERVER_ANSWER_OK = 200;
 
   window.backend = {

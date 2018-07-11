@@ -9,12 +9,16 @@
 
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.utils.ESC_KEY && evt.target.className !== 'text__hashtags' && evt.target.className !== 'text__description') {
+        window.utils.imageSetupElement.value = '';
+        window.effectScale.resetEffectScale();
         window.utils.hideElement(window.utils.imageEditElement);
       }
     });
   });
 
   closeimageEditElement.addEventListener('click', function () {
+    window.utils.imageSetupElement.value = '';
+    window.effectScale.resetEffectScale();
     window.utils.hideElement(window.utils.imageEditElement);
   });
 })();
