@@ -46,7 +46,7 @@
       hashtagsInputElement.style = 'border: 2px solid red';
     } else {
       evt.preventDefault();
-      window.backend.upload(new FormData(imageUploadFormElement), successHandler, serverUploadError);
+      window.backend.upload(new FormData(imageUploadFormElement), successHandler, serverUploadErrorHandler);
     }
   });
 
@@ -62,7 +62,7 @@
     resetFormInfo();
   };
 
-  var serverUploadError = function () {
+  var serverUploadErrorHandler = function () {
     window.utils.hideElement(window.utils.imageEditElement);
     resetFormInfo();
     var errorMessageTemplateElement = document.querySelector('#picture').content.querySelector('.img-upload__message--error');

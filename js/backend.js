@@ -43,6 +43,16 @@
         }
       });
 
+      xhr.addEventListener('error', function () {
+        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      });
+
+      xhr.addEventListener('timeout', function () {
+        onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      });
+
+      xhr.timeout = 5000;
+
       xhr.open('POST', UPLOAD_URL);
       xhr.send(data);
     }
