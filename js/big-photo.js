@@ -2,11 +2,11 @@
 
 (function () {
   // раскрытие/закрытие большого изображения и его создание
+  var MAX_RENDER_COMMENTS = 5;
   var closeBigPhotoElement = document.querySelector('.big-picture__cancel');
   var bigPhotoElement = document.querySelector('.big-picture');
   var socialCommentListElement = document.querySelector('.social__comments');
   var socialCommentElement = document.querySelector('.social__comment');
-
 
   /* var getRandomComments = function () {
     var comments = [];
@@ -41,10 +41,15 @@
     bigPhotoElement.querySelector('.comments-count').textContent = photo.comments.length;
     bigPhotoElement.querySelector('.social__caption').textContent = photo.description;
 
-    /*var socialComments = createSocialComments(photo);
-    for (var i = 0; i < socialComments.length; i++) {
+    var commentsToRemoveElement = document.querySelectorAll('.social__comment');
+    commentsToRemoveElement.forEach(function (comment) {
+      socialCommentListElement.removeChild(comment);
+    });
+
+    var socialComments = createSocialComments(photo);
+    for (var i = 0; i < MAX_RENDER_COMMENTS; i++) {
       socialCommentListElement.appendChild(socialComments[i]);
-    }*/
+    }
 
     return bigPhotoElement;
   };
