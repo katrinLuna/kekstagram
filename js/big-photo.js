@@ -8,17 +8,6 @@
   var socialCommentListElement = document.querySelector('.social__comments');
   var socialCommentElement = document.querySelector('.social__comment');
 
-  /* var getRandomComments = function () {
-    var comments = [];
-    var commentCount = window.utils.getRandomNumber(1, 2);
-
-    for (var i = 0; i < commentCount; i++) {
-      comments.push(USER_COMMENTS[window.utils.getRandomNumber(0, USER_COMMENTS.length - 1)]);
-    }
-
-    return comments;
-  }; */
-
   var createSocialComments = function (photo) {
     var comment;
     var newComments = [];

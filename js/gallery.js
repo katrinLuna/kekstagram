@@ -14,8 +14,11 @@
     var picturePreviewElement = document.querySelectorAll('.picture__link');
     window.bigPhoto.makePicPreviewClicable(picturePreviewElement);
     window.gallery = {
-      usersPhotosAll: usersPhotos
+      usersPhotosAll: usersPhotos,
+      picturePreviewElements: picturePreviewElement,
+      renderPhotosFunction: renderPhotos
     };
+    window.photoSorting();
   };
 
   var serverDownloadError = function (errorMessage) {
