@@ -20,15 +20,19 @@
       if (evt.target.id === 'filter-new') {
         var usersPhotosRandom = sortPhotoByRamdom(window.gallery.usersPhotosAll, PHOTOS_RAND_COUNT);
         window.gallery.renderPhotosFunction(usersPhotosRandom);
+        var renewPicturePreviewElement = document.querySelectorAll('.picture__link');
+        window.bigPhoto.makePicPreviewClicable(renewPicturePreviewElement, usersPhotosRandom);
       } else if (evt.target.id === 'filter-popular') {
         window.gallery.renderPhotosFunction(window.gallery.usersPhotosAll);
+        var picturePreviewPopularElement = document.querySelectorAll('.picture__link');
+        window.bigPhoto.makePicPreviewClicable(picturePreviewPopularElement, window.gallery.usersPhotosAll);
       } else if (evt.target.id === 'filter-discussed') {
         var usersPhotosByParametr = sortByParametr(window.gallery.usersPhotosAll);
         window.gallery.renderPhotosFunction(usersPhotosByParametr);
+        var picturePreviewByParametrElement = document.querySelectorAll('.picture__link');
+        window.bigPhoto.makePicPreviewClicable(picturePreviewByParametrElement, usersPhotosByParametr);
       }
 
-      var renewPicturePreviewElement = document.querySelectorAll('.picture__link');
-      window.bigPhoto.makePicPreviewClicable(renewPicturePreviewElement);
     }));
   };
 

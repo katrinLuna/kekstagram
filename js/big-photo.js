@@ -44,10 +44,10 @@
   };
 
   window.bigPhoto = {
-    makePicPreviewClicable: function (previewPic) {
+    makePicPreviewClicable: function (previewPic, photoArray) {
       for (var i = 0; i < previewPic.length; i++) {
         previewPic[i].addEventListener('click', function (evt) {
-          createBigPhoto(window.gallery.usersPhotosAll[evt.target.dataset.idnum]);
+          createBigPhoto(photoArray[evt.target.dataset.idnum]);
           document.body.classList.add('modal-open');
 
           document.addEventListener('keydown', function (event) {
