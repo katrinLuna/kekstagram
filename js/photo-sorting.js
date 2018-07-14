@@ -45,13 +45,17 @@
   };
 
   var sortPhotoByRamdom = function (data, quantity) {
-    var temporary = data.slice();
-    temporary.forEach(function (element, i, arr) {
-      var j = window.utils.getRandomNumber(0, i);
-      arr[i] = arr[j];
-      arr[j] = element;
-    });
-    return temporary.slice(0, quantity);
+    var temporaryArr = data.slice();
+
+    var newphotoArr = [];
+    for (var i = 0; i < quantity; i++) {
+      var newPhotoRandom = temporaryArr[window.utils.getRandomNumber(0, temporaryArr.length)];
+      var randomNumberCurrent = temporaryArr.indexOf(newPhotoRandom);
+      newphotoArr.push(newPhotoRandom);
+      temporaryArr.splice(randomNumberCurrent, 1);
+    }
+
+    return newphotoArr;
   };
 
 
