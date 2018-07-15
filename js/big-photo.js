@@ -52,8 +52,8 @@
           createBigPhoto(photoArray[evt.target.dataset.idnum]);
           document.body.classList.add('modal-open');
 
-          document.addEventListener('keydown', function (event) {
-            if (event.keyCode === window.utils.ESC_KEY) {
+          document.addEventListener('keydown', function (keyEvent) {
+            if (keyEvent.keyCode === window.utils.ESC_KEY) {
               document.body.classList.remove('modal-open');
               window.utils.hideElement(bigPhotoElement);
             }
