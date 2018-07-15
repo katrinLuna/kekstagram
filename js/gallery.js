@@ -31,9 +31,9 @@
     for (var i = 0; i < photos.length; i++) {
       var photoElement = similarPhotoTemplateElement.cloneNode(true);
 
+      photoElement.dataset.idnum = i;
       photoElement.querySelector('.picture__stat--likes').textContent = photos[i].likes;
       photoElement.querySelector('.picture__img').src = photos[i].url;
-      photoElement.querySelector('.picture__img').dataset.idnum = i;
       photoElement.querySelector('.picture__stat--comments').textContent = photos[i].comments.length;
 
       fragment.appendChild(photoElement);
