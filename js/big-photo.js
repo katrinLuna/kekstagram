@@ -8,17 +8,6 @@
   var socialCommentListElement = document.querySelector('.social__comments');
   var socialCommentElement = document.querySelector('.social__comment');
 
-  /* var getRandomComments = function () {
-    var comments = [];
-    var commentCount = window.utils.getRandomNumber(1, 2);
-
-    for (var i = 0; i < commentCount; i++) {
-      comments.push(USER_COMMENTS[window.utils.getRandomNumber(0, USER_COMMENTS.length - 1)]);
-    }
-
-    return comments;
-  }; */
-
   var createSocialComments = function (photo) {
     var comment;
     var newComments = [];
@@ -46,8 +35,10 @@
       socialCommentListElement.removeChild(comment);
     });
 
+    var commentsArrayLength = photo.comments.length > MAX_RENDER_COMMENTS ? MAX_RENDER_COMMENTS : photo.comments.length;
+
     var socialComments = createSocialComments(photo);
-    for (var i = 0; i < MAX_RENDER_COMMENTS; i++) {
+    for (var i = 0; i < commentsArrayLength; i++) {
       socialCommentListElement.appendChild(socialComments[i]);
     }
 
@@ -55,10 +46,10 @@
   };
 
   window.bigPhoto = {
-    makePicPreviewClicable: function (previewPic) {
+    makePicPreviewClicable: function (previewPic, photoArray) {
       for (var i = 0; i < previewPic.length; i++) {
         previewPic[i].addEventListener('click', function (evt) {
-          createBigPhoto(window.gallery.usersPhotosAll[evt.target.dataset.idnum]);
+          createBigPhoto(photoArray[evt.target.dataset.idnum]);
           document.body.classList.add('modal-open');
 
           document.addEventListener('keydown', function (event) {

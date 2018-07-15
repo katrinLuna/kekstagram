@@ -12,10 +12,13 @@
     window.utils.visuallyHideElement(document.querySelector('.social__comment-count'));
     window.utils.visuallyHideElement(document.querySelector('.social__loadmore'));
     var picturePreviewElement = document.querySelectorAll('.picture__link');
-    window.bigPhoto.makePicPreviewClicable(picturePreviewElement);
+    window.bigPhoto.makePicPreviewClicable(picturePreviewElement, usersPhotos);
     window.gallery = {
-      usersPhotosAll: usersPhotos
+      usersPhotosAll: usersPhotos,
+      picturePreviewElements: picturePreviewElement,
+      renderPhotos: renderPhotos
     };
+    window.photoSorting();
   };
 
   var serverDownloadError = function (errorMessage) {
