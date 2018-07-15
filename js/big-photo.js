@@ -35,8 +35,10 @@
       socialCommentListElement.removeChild(comment);
     });
 
+    var commentsArrayLength = photo.comments.length > MAX_RENDER_COMMENTS ? MAX_RENDER_COMMENTS : photo.comments.length;
+
     var socialComments = createSocialComments(photo);
-    for (var i = 0; i < MAX_RENDER_COMMENTS; i++) {
+    for (var i = 0; i < commentsArrayLength; i++) {
       socialCommentListElement.appendChild(socialComments[i]);
     }
 

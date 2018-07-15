@@ -16,7 +16,7 @@
     window.gallery = {
       usersPhotosAll: usersPhotos,
       picturePreviewElements: picturePreviewElement,
-      renderPhotosFunction: renderPhotos
+      renderPhotos: renderPhotos
     };
     window.photoSorting();
   };
