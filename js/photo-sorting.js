@@ -50,10 +50,9 @@
 
     var newphotoArr = [];
     for (var i = 0; i < quantity; i++) {
-      var newPhotoRandom = temporaryArr[window.utils.getRandomNumber(0, temporaryArr.length - 1)];
-      var randomNumberCurrent = temporaryArr.indexOf(newPhotoRandom);
-      newphotoArr.push(newPhotoRandom);
-      temporaryArr.splice(randomNumberCurrent, 1);
+      var photoRandomIndex = window.utils.getRandomNumber(0, temporaryArr.length - 1);
+      newphotoArr.push(temporaryArr[photoRandomIndex]);
+      temporaryArr.splice(photoRandomIndex, 1);
     }
 
     return newphotoArr;

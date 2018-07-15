@@ -41,11 +41,18 @@
 
   hashtagsInputElement.addEventListener('blur', hashtagsValidationHandler);
 
-  formSubmitElement.addEventListener('click', function (evt) {
+  formSubmitElement.addEventListener('click', function () {
+    if (!hashtagsInputElement.validity.valid) {
+      hashtagsInputElement.style = 'border: 2px solid red';
+    }
+  });
+
+  imageUploadFormElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    hashtagsValidationHandler();
     if (!hashtagsInputElement.validity.valid) {
       hashtagsInputElement.style = 'border: 2px solid red';
     } else {
-      evt.preventDefault();
       window.backend.upload(new FormData(imageUploadFormElement), successHandler, serverUploadErrorHandler);
     }
   });
