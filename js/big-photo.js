@@ -14,14 +14,20 @@
 
     for (var i = 0; i < photo.comments.length; i++) {
       comment = socialCommentElement.cloneNode(true);
-      comment.querySelector('.social__picture').src = 'img/avatar-' + window.utils.getRandomNumber(1, 6) + '.svg';
-      comment.querySelector('.social__text').textContent = photo.comments[i];
+      comment.querySelector('.social__picture').src = photo.comments[i].avatar;
+      comment.querySelector('.social__text').textContent = photo.comments[i].message;
 
       newComments.push(comment);
     }
 
     return newComments;
   };
+
+//   comments: [{avatar: "img/avatar-6.svg",…},…]
+// 0: {avatar: "img/avatar-6.svg",…}
+// avatar: "img/avatar-6.svg"
+// message: "Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце-концов это просто непрофессионально."
+// name: "Степан"
 
   var createBigPhoto = function (photo) {
     window.utils.showElement(bigPhotoElement);
